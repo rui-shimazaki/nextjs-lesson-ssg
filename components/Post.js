@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Layout from "./layout";
 
 const Post = ({ post }) => {
 	return (
