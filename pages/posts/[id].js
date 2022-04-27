@@ -1,19 +1,20 @@
 import Link from "next/link";
 import Layout from "../../components/Layout";
 import { getAllPostIds, getPostData } from "../../lib/posts";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 export default function Post({ post }) {
 	if (!post) {
 		return <div>Loading...</div>;
 	}
 	return (
-		<Layout title={post.title}>
+		<Layout title={post.fields.title}>
 			<p className="m-4">
 				{"ID : "}
-				{post.id}
+				{post.sys.id}
 			</p>
-			<p className="mb-8 text-xl font-bold">{post.title}</p>
-			<p className="px-10">{post.body}</p>
+			<p className="mb-8 text-xl font-bold">{post.fields.title}</p>
+			<p className="px-10">{documentToReactComponents(post.fields.content)}</p>
 
 			<Link href="/blog-page">
 				<div className="flex cursor-pointer mt-12">
@@ -53,5 +54,6 @@ export async function getStaticProps({ params }) {
 		props: {
 			post,
 		},
+		revalidate: 3,
 	};
 }
